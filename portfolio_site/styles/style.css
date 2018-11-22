@@ -1,0 +1,42 @@
+
+html, body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.mySlides {
+  display: none;
+}
+
+#content {
+  max-width: 2000px;
+  margin-top: 46px;
+}
+
+#carousel {
+max-width: 65%;
+}
+
+#whiteBox {
+  /* max-width: 300px;
+  max-height: 225px; */
+  padding: 16px;
+}
+
+#modalBox {
+  width: 75%;
+}
+
+#marker {
+  width: 30px;
+}
+
+#mapBox {
+  width: 300px;
+  height: 250px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  border: 3px solid black;
+}

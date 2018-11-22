@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dylan Harwell</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" />
+  <link rel="stylesheet" type="text/css "href="styles/style.css">
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ABOUT</a>
+    <a href="#portfolio" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PORTFOLIO</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="#about" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">ABOUT</a>
+  <a href="#portfolio" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">PORTFOLIO</a>
+  <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CONTACT</a>
+</div>
+
+<!-- Page content -->
+<div id="content" class="w3-content">
+
+  <!-- Carousel Images -->
+  <div class="mySlides w3-display-container w3-center w3-black">
+    <img id="carousel" src="images/garfield.jpg">
+  </div>
+  <div class="mySlides w3-display-container w3-center w3-black">
+    <img id="carousel" src="images/denver2.jpg">
+  </div>
+  <div class="mySlides w3-display-container w3-center w3-black">
+    <img id="carousel" src="images/monument.jpg">
+  </div>
+  <div class="mySlides w3-display-container w3-center w3-black">
+    <img id="carousel" src="images/bellcord.jpg">
+  </div>
+
+  <!-- About Section -->
+  <div id="about" class="w3-container w3-content w3-center w3-padding-64" style="max-width:900px">
+    <h2 class="w3-wide">ABOUT</h2>
+    <p class="w3-opacity w3-center"><i>A bit about my experience...</i></p><br>
+    <div id="education" class="w3-container w3-content w3-center w3-margin-bottom">
+      <h3>Education</h3>
+      <ul class="w3-ul">
+        <li>University of Wisconsin Madison - <strong>MS GIS Development</strong> - 09/2018 to Present<br>
+          - Courses: Graphic Design in Cartography</li>
+        <li>University of Denver - <strong>Graduate GIS Certificate</strong> - March 2018<br>
+          - Courses: Cartography, Environmental GIS, Python Programming, Spatial Statistics, Remote Sensing I & II</li>
+        <li>University of Colorado Denver - <strong>BS Applied Physics</strong> - May 2014<br></li>
+      </ul>
+    </div>
+    <div id="experience" class="w3-container w3-content w3-center w3-margin-top">
+      <h3>Experience</h3>
+      <ul class="w3-ul">
+        <li>City of Grand Junction - <strong>GIS Technician</strong> - 08/2018 to Present<br>
+          - Manage storm and sanitary sewer data: input from as-builts, QA/QC, support field crews<br>
+          - Perform spatial analysis in support of fire department resource allocation<br>
+          - Provide ad-hoc mapping and data requests to all city departments<br>
+          - Use Lucity asset management system to manage city assets and link to spatial features for city web map<br>
+          - Automate tasks and develop custom tools for GIS team using Python</li>
+        <li>U.S. Geological Survey - <strong>GIS Student Contractor</strong> - 07/2017 to 07/2018<br>
+          - Support the data management team of the Central Energy Resources Science Center<br>
+          - Create and update metadata records following FGDC metadata standards<br>
+          - Update, maintain, and troubleshoot legacy datasets<br>
+          - Develop custom Python tools and apps for GIS and data management support<br>
+          - Publications and data releases: Little Snake River and Red Desert Coal Assessment, U.S. Historic Oil and Gas Production</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Portfolio Section -->
+  <div id="portfolio" class="w3-black">
+    <div class="w3-container w3-content w3-padding-64">
+      <h2 class="w3-wide w3-center">PORTFOLIO</h2>
+      <p class="w3-opacity w3-center"><i>Check out some work samples...</i></p><br>
+      <!-- Sample 1 -->
+      <div class="w3-row-padding">
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/AM6_portfolio.svg" alt="map1" style="width: 77%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal1').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- Sample 2 -->
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/Well_Type_Mile.jpg" alt="map2" style="width: 90%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal2').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- Sample 3 -->
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/Well_Density_Mile.jpg" alt="map3" style="width: 90%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal3').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Second Row -->
+      <div class="w3-row-padding">
+        <!-- Sample 4 -->
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/infographic_thumb.png" alt="map4" style="width: 82.5%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal4').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- Sample 5 -->
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/Lab2_thumb.png" alt="map5" style="width: 100%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal5').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+        <!-- Sample 6 -->
+        <div class="w3-third w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <img src="images/Avalanche.png" alt="map6" class="w3-border" style="width: 82.5%">
+            <div class="w3-container w3-center">
+              <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal6').style.display='block'">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Code Samples Section -->
+      <p class="w3-opacity w3-center w3-padding-32"><i>Check out some code samples...</i></p><br>
+      <div class="w3-row-padding">
+        <!-- Code Sample 1 -->
+        <div class="w3-half w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <a href="images/SearchLogs_App.txt" target="_blank">Code Sample 1</a>
+          </div>
+        </div>
+        <!-- Code Sample 2 -->
+        <div class="w3-half w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <a href="images/Classify_IHS_Cells_Tool.txt" target="_blank">Code Sample 2</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Samples Modal Button/Display 1 -->
+  <div id='modal'>
+    <div id="modal1" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal1').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 1</h2>
+        </header>
+        <div class="w3-container">
+          <img src="images/AM6_portfolio.svg" alt="map1" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal1').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Samples Modal Button/Display 2 -->
+  <div id='modal'>
+    <div id="modal2" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal2').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 2</h2>
+        </header>
+        <div class="w3-container">
+          <img src="images/Well_Type_Mile.jpg" alt="map2" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal2').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Samples Modal Button/Display 3 -->
+  <div id='modal'>
+    <div id="modal3" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal3').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 3</h2>
+        </header>
+        <div class="w3-container">
+          <img src="images/Well_Density_Mile.jpg" alt="map3" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal3').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Samples Modal Button/Display 4 -->
+  <div id='modal'>
+    <div id="modal4" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal4').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 4</h2>
+        </header>
+        <div class="w3-container w3-padding-16">
+          <img src="images/Harwell_GEOG572_Lab1_Infographic.png" alt="map4" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal4').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Samples Modal Button/Display 5 -->
+  <div id='modal'>
+    <div id="modal5" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal5').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 5</h2>
+        </header>
+        <div class="w3-container w3-padding-16">
+          <img src="images/Harwell_GEOG572_Lab2.png" alt="map5" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal5').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Samples Modal Button/Display 6 -->
+  <div id='modal'>
+    <div id="modal6" class="w3-modal">
+      <div id="modalBox" class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-black w3-center w3-padding-26">
+          <span onclick="document.getElementById('modal6').style.display='none'"
+         class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
+          <h2 class="w3-wide">Work Sample 6</h2>
+        </header>
+        <div class="w3-container w3-padding-16">
+          <img src="images/Avalanche.png" alt="map6" class="w3-border" style="width: 100%">
+          <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal6').style.display='none'">Close <i class="fa fa-remove"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div id="contact" class="w3-container w3-content w3-padding-64" style="max-width:800px">
+    <h2 class="w3-wide w3-center">CONTACT</h2>
+    <p class="w3-opacity w3-center"><i>Want to know more? Get in touch with me...</i></p><br>
+    <div class="w3-row w3-padding-32">
+      <div class="w3-half w3-margin-bottom">
+        <div class="w3-container w3-white">
+          <i id="marker" class="fa fa-map-marker"></i> Grand Junction, CO<br>
+          <i id="marker" class="fa fa-phone"></i> Phone: 505-690-0343<br>
+          <i id="marker" class="fa fa-envelope"></i> Email: dharwell@wisc.edu<br>
+        </div>
+      </div>
+      <div class="w3-half w3-margin-bottom">
+        <div id="mapBox" class="w3-container w3-white">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- End Page Content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+  <a href="https://www.linkedin.com/in/dylan-harwell-6178b366/" target="_blank"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <p class="w3-medium">Dylan Harwell   2018</p>
+  <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+<!-- Link to JavaScript File -->
+<script type="text/javascript" src="scripts/scripts.js"></script>
+
+</body>
+</html>

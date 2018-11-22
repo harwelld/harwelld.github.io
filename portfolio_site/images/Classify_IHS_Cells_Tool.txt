@@ -1,0 +1,248 @@
+#-------------------------------------------------------------------------------
+# Name:        Classify_IHS_Cells   (Tool)
+#
+# Purpose:     Script tool to classify polygon cells based on types of wells
+#              contained in each cell. This will classify a single feature class
+#              at a time instead of looping through and ding them all at once.
+#
+# Usage Notes: Use after cells have been joined manually and saved to a new GDB
+#              using the 'Copy Features' tool.
+#
+#              **This tool could run for several days!**
+#
+#
+# Author:      Dylan Harwell
+#
+# Created:     02/10/2017
+# Copyright:   (c) dharwell 2017
+
+#-------------------------------------------------------------------------------
+# Import modules and set environment settings
+import time
+import arcpy
+from arcpy import env
+from arcpy import da
+env.overwriteOutput = True
+GDBpath = arcpy.GetParameterAsText(0)
+env.workspace = GDBpath
+fc = arcpy.GetParameterAsText(1)
+
+#********************* Classify Cells Field Calculator ************************#
+
+countField = "Count_"
+sumField = "Sum_Well_Type"
+cellType = "Well_Type_Cell"
+
+# Logic: If cell has 1 well, THEN Well_Type_Cell = Sum_Well_Type
+exp1 = countField + " = 1"
+Exp1 = "!" + sumField + "!"
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp1)
+cnt1 = arcpy.GetCount_management(selection)
+Count1 = cnt1.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp1, "PYTHON")
+arcpy.AddMessage(Count1 + " cells with count 1 classified...")
+
+# Logic: Cell has 2 wells AND Sum_Well_Type = 2, THEN Well_Type_Cell = 1
+exp2 = countField + " = 2 AND " + sumField + " = 2"
+Exp2 = 1
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp2)
+cnt2 = arcpy.GetCount_management(selection)
+Count2 = cnt2.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp2, "PYTHON")
+arcpy.AddMessage(Count2 + " cells with count 2 and sum type 2 classified as type 1...")
+
+# Logic: Cell has 2 wells AND Sum_Well_Type = 8, THEN Well_Type_Cell = 4
+exp3 = countField + " = 2 AND " + sumField + " = 8"
+Exp3 = 4
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp3)
+cnt3 = arcpy.GetCount_management(selection)
+Count3 = cnt3.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp3, "PYTHON")
+arcpy.AddMessage(Count3 + " cells with count 2 and sum type 8 classified as type 4...")
+
+# Logic: Cell has 3 wells AND Sum_Well_Type = 3, THEN Well_Type_Cell = 1
+exp4 = countField + " = 3 AND " + sumField + " = 3"
+Exp4 = 1
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp4)
+cnt4 = arcpy.GetCount_management(selection)
+Count4 = cnt4.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp4, "PYTHON")
+arcpy.AddMessage(Count4 + " cells with count 3 and sum type 3 classified as type 1...")
+
+# Logic: Cell has 3 wells AND Sum_Well_Type = 12, THEN Well_Type_Cell = 4
+exp5 = countField + " = 3 AND " + sumField + " = 12"
+Exp5 = 4
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp5)
+cnt5 = arcpy.GetCount_management(selection)
+Count5 = cnt5.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp5, "PYTHON")
+arcpy.AddMessage(Count5 + " cells with count 3 and sum type 12 classified as type 4...")
+
+# Logic: Cell has 4 wells AND Sum_Well_Type = 4, THEN Well_Type_Cell = 1
+exp6 = countField + " = 4 AND " + sumField + " = 4"
+Exp6 = 1
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp6)
+cnt6 = arcpy.GetCount_management(selection)
+Count6 = cnt6.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp6, "PYTHON")
+arcpy.AddMessage(Count6 + " cells with count 4 and sum type 4 classified as type 1...")
+
+# Logic: Cell has 4 wells AND Sum_Well_Type = 16, THEN Well_Type_Cell = 4
+exp7 = countField + " = 4 AND " + sumField + " = 16"
+Exp7 = 4
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp7)
+cnt7 = arcpy.GetCount_management(selection)
+Count7 = cnt7.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp7, "PYTHON")
+arcpy.AddMessage(Count7 + " cells with count 4 and sum type 16 classified as type 4...")
+
+# Logic: Cell has 5 wells AND Sum_Well_Type = 5, THEN Well_Type_Cell = 1
+exp8 = countField + " = 5 AND " + sumField + " = 5"
+Exp8 = 1
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp8)
+cnt8 = arcpy.GetCount_management(selection)
+Count8 = cnt8.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp8, "PYTHON")
+arcpy.AddMessage(Count8 + " cells with count 5 and sum type 5 classified as type 1...")
+
+# Logic: Cell has 5 wells AND Sum_Well_Type = 20, THEN Well_Type_Cell = 4
+exp9 = countField + " = 5 AND " + sumField + " = 20"
+Exp9 = 4
+
+polyFC = fc
+selection = fc + "_lyr"
+arcpy.MakeFeatureLayer_management(polyFC, selection, exp9)
+cnt9 = arcpy.GetCount_management(selection)
+Count9 = cnt9.getOutput(0)
+arcpy.CalculateField_management(selection, cellType, Exp9, "PYTHON")
+arcpy.AddMessage(Count9 + " cells with count 5 and sum type 20 classified as type 4...")
+
+#************************* Classify Cells Cursor ******************************#
+
+if "Alaska" in fc:
+    wells = "Alaska_Wells"
+elif "Lower48" in fc:
+    wells = "Lower48_Wells"
+
+cells = fc
+Nullexp = cellType + " IS NULL"
+arcpy.MakeFeatureLayer_management(cells, "cells_lyr", Nullexp)
+arcpy.MakeFeatureLayer_management(wells, "wells_lyr")
+
+# Create list object for polygon OIDs and well type
+OIDlist = []
+wellType = []
+
+# Loop through polygon cells and update list of OIDs
+with da.SearchCursor("cells_lyr", ["OBJECTID"]) as cursor:
+    for row in cursor:
+        OIDlist.append(row[0])
+arcpy.AddMessage("OID list created with OBJECTIDs")
+arcpy.AddMessage("Length of OID list = " + str(len(OIDlist)))
+
+# Create variable to track progress
+prog = 0
+
+# Print start time of cursor
+arcpy.AddMessage(("Initiated cursor to loop through remaining cells at: "
+    + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y")))
+
+# Loop through OID list, make layer and select wells within each cell
+for OID in OIDlist:
+    whereclause = "OBJECTID = " + str(OID)
+    arcpy.MakeFeatureLayer_management("cells_lyr", "cells_select", whereclause)
+    arcpy.SelectLayerByLocation_management("wells_lyr", "WITHIN", "cells_select", "", "NEW_SELECTION")
+    arcpy.CopyFeatures_management("wells_lyr", "wells_selection")
+
+    # Create counter variables for well type
+    oil = 0
+    gas = 0
+    oag = 0
+    abd = 0
+
+    # Create cursor to loop through wells selection and determine well type
+    with da.SearchCursor("wells_selection", ["Well_Type"]) as cursor:
+        for row in cursor:
+            if row[0] == 1:
+                oil += 1
+            elif row[0] == 2:
+                gas += 1
+            elif row[0] == 3:
+                oag += 1
+            elif row[0] == 4:
+                abd += 1
+            else:
+                arcpy.AddMessage("Unlcassified records!")
+
+        if  oil > 0 and gas == 0 and oag == 0:
+            wellType.append(1)
+        elif gas > 0 and oil == 0 and oag == 0:
+            wellType.append(2)
+        elif oil > 0 and gas > 0:
+            wellType.append(3)
+        elif oag > 0:
+            wellType.append(3)
+        elif oil == 0 and gas == 0 and oag == 0:
+            wellType.append(4)
+        else:
+            arcpy.AddMessage("Unclassified records!")
+
+    # Progress tracking messages
+    prog += 1
+    if prog == 100:
+        arcpy.AddMessage("Progress: 100 Cells " + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y"))
+    elif prog == 10000:
+        arcpy.AddMessage("Progress: 10,000 Cells " + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y"))
+    elif prog == 100000:
+        arcpy.AddMessage("Progress: 100,000 Cells " + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y"))
+    elif prog == 200000:
+        arcpy.AddMessage("Progress: 200,000 Cells " + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y"))
+    elif prog == 400000:
+        arcpy.AddMessage("Progress: 400,000 Cells " + time.strftime("%H:%M:%S") + " " + time.strftime("%m/%d/%Y"))
+
+arcpy.AddMessage("Length of well type list = " + str(len(wellType)))
+
+# Use while loop and update cursor to add well types to polygon feature class
+# Set counter variable for while loop
+if len(OIDlist) == len(wellType):
+    i = 0
+    while i <= (len(wellType) - 1):
+        with da.UpdateCursor("cells_lyr", ["Well_Type_Cell"]) as cursor:
+            for row in cursor:
+                row[0] = wellType[i]
+                cursor.updateRow(row)
+                i += 1
+else:
+    arcpy.AddMessage("Well type list not equal to OID list, inspection of table required!")
+
+#************************ Delete Sum_Well_Type Field **************************#
+arcpy.DeleteField_management(fc, sumField)
+fieldNames = [f.name for f in arcpy.ListFields(fc)]
+arcpy.AddMessage("Data contains only these fields now: " + str(fieldNames))
+
+#************************ Delete Wells Selection ******************************#
+arcpy.Delete_management("wells_selection")
