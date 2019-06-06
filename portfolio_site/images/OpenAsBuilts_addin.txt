@@ -1,0 +1,132 @@
+import arcpy
+import os
+import sys
+import pythonaddins
+
+# Globals... I know, not the best way to do this
+# Selected layer, and as-built fields
+selFC = ""
+ab_field = ""
+documents_dir = "X:\\documents"
+
+class SelectLayer(object):
+    """Implementation for OpenAsBuilts_addin.combobox (ComboBox)"""
+
+    def __init__(self):
+
+        self.editable = True
+        self.enabled = True
+        self.dropdownWidth = 'WWWWWWWWWWWWWWW'
+        self.width = 'WWWWWWWWWWWWWWW'
+
+
+    def onSelChange(self, selection):
+        global selFC, ab_field
+        selFC = arcpy.mapping.ListLayers(self.mxd, selection)[0]
+
+        if "SWNETMHG" in selFC.datasetName:       # Sewer Structures
+            ab_field = "MAG_USER15"
+
+        elif "SWNETG" in selFC.datasetName:       # Sewer Pipes
+            ab_field = "NTG_USER15"
+
+        elif "SMVSTRUCG" in selFC.datasetName:    # Storm Structures
+            ab_field = "SNG_USER5"
+
+        elif "SMVCONDTG" in selFC.datasetName:    # Storm Pipes
+            ab_field = "CNG_USER4"
+
+        elif "WTPIPEG" in selFC.datasetName:      # Water Pipes
+            ab_field = "PPG_MAP1_NO"
+
+
+    def onFocus(self, focused):
+
+        if focused:
+
+            self.mxd = arcpy.mapping.MapDocument("CURRENT")
+            df = arcpy.mapping.ListDataFrames(self.mxd)[0]
+            layers = arcpy.mapping.ListLayers(df)
+            self.items = []
+
+            for lyr in layers:
+
+                if lyr.isFeatureLayer:
+
+                    if "SWNETMHG" in lyr.datasetName:       # Sewer Structures
+                        self.items.append(str(lyr.name))
+
+                    elif "SWNETG" in lyr.datasetName:       # Sewer Pipes
+                        self.items.append(str(lyr.name))
+
+                    elif "SMVSTRUCG" in lyr.datasetName:    # Storm Structures
+                        self.items.append(str(lyr.name))
+
+                    elif "SMVCONDTG" in lyr.datasetName:    # Storm Pipes
+                        self.items.append(str(lyr.name))
+
+                    elif "WTPIPEG" in lyr.datasetName:      # Water Pipes
+                        self.items.append(str(lyr.name))
+
+
+    def refresh(self):
+        self.refresh()
+
+
+class OpenAsBuilts(object):
+    """Implementation for OpenAsBuilts_addin.button (Button)"""
+    def __init__(self):
+        self.enabled = True
+        self.checked = False
+
+    def onClick(self):
+        try:
+            # Use Describe and FIDset to generate list of only selected features
+            desc = arcpy.Describe(selFC)
+            OIDs = desc.FIDset
+            OIDList = OIDs.split("; ")
+        except:
+            error = "No layer chosen or layer has been removed from map, please choose a layer from the drop-down and try again."
+            pythonaddins.MessageBox(error, "Selection Error")
+            sys.exit()
+
+        # Generate error message if too many features selected so that a bunch of PDFs don't open
+        if len(OIDList[0]) == 0:
+            errorMessage = "No features selected from: " + str(selFC) + "\nPlease select features and try again."
+            pythonaddins.MessageBox(errorMessage, "Selection Error")
+        elif len(OIDList) > 5:
+            errorMessage = "Too many features selected from: " + str(selFC) + "\nPlease select up to 5 features and try again."
+            pythonaddins.MessageBox(errorMessage, "Selection Error")
+
+        # Proceed to create list of PDFs with curson, search X drive, and open them
+        else:
+            ##message = "OIDs: " + str(len(OIDList)) + " " + str(OIDList) + '\n' + "As-Built Field: " + ab_field
+
+            asbuilts = []
+            with arcpy.da.SearchCursor(selFC, [ab_field]) as cursor:
+                for row in cursor:
+                    if None in row:
+                        pass
+                    elif row[0] not in asbuilts:
+                        asbuilts.append(row[0])
+
+            ##pythonaddins.MessageBox(str(asbuilts), "Selected Features")
+
+            if asbuilts:
+                message = str(selFC) + " Selected OIDs: " + str(OIDList) + "\nClick OK to open As-Built(s): " + str(asbuilts)
+                pythonaddins.MessageBox(message, "Selection Information")
+
+                for ab in asbuilts:
+                    ab_path = os.path.join(documents_dir, ab)
+                    if os.path.isfile(ab_path):
+                        try:
+                            os.startfile(ab_path)
+                        except:
+                            pythonaddins.MessageBox("An unknown error occured when opening file: " + str(ab), "File Error")
+                    else:
+                        pythonaddins.MessageBox("Could not locate as-built: " + str(ab) + " in X drive.", "File Not Found")
+                        sys.exit()
+
+            else:
+                message = "Sorry, no as-built(s) for the selected feature(s)."
+                pythonaddins.MessageBox(message, "No As-Builts Found")

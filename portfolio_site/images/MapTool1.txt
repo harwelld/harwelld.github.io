@@ -1,0 +1,187 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows;
+using ArcGIS.Core.Data;
+using ArcGIS.Core.Geometry;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Mapping;
+
+namespace OpenAsBuilts
+{
+    internal class OpenAsbuilts : MapTool
+    {
+        public OpenAsbuilts()
+        {
+            // Set tool properties - Rectangle Map Sketch Tool
+            IsSketchTool = true;
+            SketchType = SketchGeometryType.Rectangle;
+            SketchOutputMode = SketchOutputMode.Map;
+        }
+
+        protected override Task OnToolActivateAsync(bool active)
+        {
+            return base.OnToolActivateAsync(active);
+        }
+
+        protected override async Task<bool> OnSketchCompleteAsync(Geometry geometry)
+        {
+            // Create dictionary of feature classes of interest and as-built field names
+            List<KeyValuePair<string, string>> list = new List<KeyValuePair<string, string>>();
+            list.Add(new KeyValuePair<string, string>("gjgislucity.DBO.SWNETG", "NTG_USER15"));             // Sewer Pipes      (index 0)
+            list.Add(new KeyValuePair<string, string>("gjgislucity.DBO.SWNETMHG", "MAG_USER15"));           // Sewer Structures (index 1)
+            list.Add(new KeyValuePair<string, string>("gjgislucity.DBO.SMVCONDTG", "CNG_USER4"));           // Storm Pipes      (index 2)
+            list.Add(new KeyValuePair<string, string>("gjgislucity.DBO.SMVSTRUCG", "SNG_USER5"));           // Storm Structures (index 3)
+            list.Add(new KeyValuePair<string, string>("gjgislucity.DBO.WTPIPEG", "PPG_MAP1_NO PPG_USER6")); // Water Pipes      (index 4)     
+            
+            var mv = MapView.Active;
+            var selectionResult = await QueuedTask.Run(() =>
+            {
+                // Initiate string builder and variables for message box text
+                var sb = new System.Text.StringBuilder();
+                var boxTitle = "Open As-Builts Selection Info";
+                var boxImage = MessageBoxImage.Information;
+
+                // Set up variables for keeping track of selected features
+                var total = 0;
+                var selected = 0;
+                string featureName;
+
+                // Set up variables to store as-built paths
+                var asbuilt = "";
+                var path = "";
+                string[] abFields;
+                string docPath = "X:\\documents\\";
+                string notesPath = docPath + "\\field_notes\\";                
+                List<string> paths = new List<string>();
+
+                // Get the features that intersect the sketch geometry and loop through
+                var features = mv.GetFeatures(geometry);
+                foreach (KeyValuePair<BasicFeatureLayer, List<long>> fL in features)
+                {
+                    // Loop through feature class list and match to user selection
+                    featureName = fL.Key.GetTable().GetName();
+                    foreach (KeyValuePair<string, string> item in list)
+                    {
+                        if (item.Key == featureName)
+                        {
+                            // Get selection information for message box
+                            selected = features[fL.Key].Count;
+                            total = total + selected;
+                            sb.AppendLine($@"{selected} {(selected == 1 ? "record" : "records")} selected in {fL.Key.Name}");
+                            // Get as-built field(s) and selected object ids
+                            abFields = item.Value.Split(' ');
+                            var oids = fL.Value;
+                            // If water pipes are selected loop through both as-built fields and generate file paths
+                            if (abFields.Count() > 1)
+                            {
+                                foreach (var ab in abFields)
+                                {
+                                    asbuilt = GetAttributeValues(fL.Key, ab, fL.Value);
+                                    if (asbuilt != "")
+                                    {
+                                        if (ab.Contains("MAP1"))
+                                        {
+                                            path = docPath + asbuilt;
+                                        }
+                                        else
+                                            path = notesPath + asbuilt;
+                                        paths.Add(path);
+                                    }
+                                }
+                            }
+                            // If other features are selected use single as-built field and generate file paths
+                            else
+                            {
+                                asbuilt = GetAttributeValues(fL.Key, abFields[0], fL.Value);     
+                                if (asbuilt != "")
+                                {
+                                    path = docPath + asbuilt;
+                                    paths.Add(path);
+                                }
+                            }
+                        }
+                    }   
+                }
+
+                // If total storm/sewer/water features selected is greater than 10, set up variables for error message box
+                if (total > 10)
+                {
+                    boxTitle = "Selection Error";
+                    boxImage = MessageBoxImage.Error;
+                    string message = $"{total} features selected! Please limit your selection to 10 or fewer and try again.";
+                    sb.Clear();
+                    sb.Append(message);
+                }
+
+                // Create tuble holding message box info and return
+                Tuple<string, string, MessageBoxImage, List<string>> results = new Tuple<string, string, MessageBoxImage, List<string>>(boxTitle, sb.ToString(), boxImage, paths);
+                return results;
+            });
+
+            // Decide which message box to show based on number of features selected
+            if (selectionResult.Item1 == "Selection Error")
+            {
+                MessageBoxResult result = ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(selectionResult.Item2, selectionResult.Item1, MessageBoxButton.OKCancel, selectionResult.Item3);
+            }
+            else
+            {
+                MessageBoxResult result = ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(selectionResult.Item2, selectionResult.Item1, MessageBoxButton.OKCancel, selectionResult.Item3);
+                // If user clicks ok, proceed to open as-builts, if user clicks cancel nothing happens
+                if (result == MessageBoxResult.OK)
+                {
+                    // Show error message if no as-builts found for selected features
+                    if (selectionResult.Item4.Count() == 0)
+                    {
+                        string noneFoundMessage = "Sorry, no as-builts found for selected features.";
+                        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(noneFoundMessage, "No As-Builts Found", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+                    else
+                    {
+                        // Loop through paths and open as-builts
+                        var fileNotFoundMessage = new System.Text.StringBuilder();
+                        foreach (var ab in selectionResult.Item4)
+                        {
+                            if (File.Exists(ab))
+                            {
+                                Process.Start(ab);
+                            }
+                            else
+                            {
+                                // Create message if file not found
+                                fileNotFoundMessage.AppendLine($"The document {ab} could not be found!");
+                            }
+                        }
+                        // Show error message if any files not found
+                        if (fileNotFoundMessage.Length > 0)
+                        {
+                            ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(fileNotFoundMessage.ToString(), "File Not Found", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Method to use cursor and retrieve attribute values by field
+        public static string GetAttributeValues(BasicFeatureLayer inFL, string fieldName, List<long> inOIDs)
+        {
+            string attValue = "";
+            QueryFilter queryFilter = new QueryFilter { ObjectIDs = inOIDs };
+            using (RowCursor rowCursor = inFL.Search(queryFilter))
+            {
+                while (rowCursor.MoveNext())
+                {
+                    using (Row row = rowCursor.Current)
+                    {
+                        attValue = Convert.ToString(row[fieldName]);
+                    }
+                }
+            }
+            return attValue; 
+        }
+    }
+}
