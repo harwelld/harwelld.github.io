@@ -52,13 +52,13 @@
 
   <!-- About Section -->
   <div id="about" class="w3-container w3-content w3-center w3-padding-64" style="max-width:900px">
-    <h2 class="w3-wide">Dylan Harwell</h2>
-    <p class="w3-opacity w3-center"><i>A bit about my experience...</i></p><br>
+    <h2 class="w3-wide">ABOUT</h2>
+    <p class="w3-opacity w3-center"><i>A bit about my education and experience...</i></p><br>
     <div id="education" class="w3-container w3-content w3-center w3-margin-bottom">
       <h3>Education</h3>
       <ul class="w3-ul">
         <li>University of Wisconsin Madison - <strong>MS GIS Development</strong> - 09/2018 to Present<br>
-          - Courses: Graphic Design in Cartography, GDB Design and Development</li>
+          - Courses: Graphic Design in Cartography</li>
         <li>University of Denver - <strong>Graduate GIS Certificate</strong> - March 2018<br>
           - Courses: Cartography, Environmental GIS, Python Programming, Spatial Statistics, Remote Sensing I & II</li>
         <li>University of Colorado Denver - <strong>BS Applied Physics</strong> - May 2014<br></li>
@@ -68,11 +68,12 @@
       <h3>Experience</h3>
       <ul class="w3-ul">
         <li>City of Grand Junction - <strong>GIS Technician</strong> - 08/2018 to Present<br>
-          - Manage storm and sanitary sewer data: input from as-builts, QA/QC, support field crews<br>
-          - Perform spatial analysis in support of fire department resource allocation<br>
+          - Manage storm and sanitary sewer data: input from as-builts and redlines<br>
+		  - Support field crews by deploying web services for Collector<br>
+		  - Use asset management system and SQL Server to manage data and QA/QC<br>
+          - Perform spatial analysis in support of fire department resource allocation and planning<br>
           - Provide ad-hoc mapping and data requests to various city departments<br>
-          - Use Lucity asset management system to manage city assets and link to spatial features for city web map<br>
-          - Automate tasks and develop custom tools for GIS team using Python</li>
+          - Automate and schedule tasks on server, develop custom tools for GIS team using Python and C#/.NET</li>
         <li>U.S. Geological Survey - <strong>GIS Student Contractor</strong> - 07/2017 to 07/2018<br>
           - Support the data management team of the Central Energy Resources Science Center<br>
           - Create and update metadata records following FGDC metadata standards<br>
@@ -92,7 +93,7 @@
       <div class="w3-row-padding">
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/AM6_portfolio.svg" alt="map1" style="width: 77%">
+            <img src="images/Well_Density_Mile.jpg" alt="map1" style="width: 90%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal1').style.display='block'">Open</button>
             </div>
@@ -101,7 +102,7 @@
         <!-- Sample 2 -->
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/Well_Type_Mile.jpg" alt="map2" style="width: 90%">
+            <img src="images/Avalanche.png" alt="map6" class="w3-border" style="width: 90%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal2').style.display='block'">Open</button>
             </div>
@@ -110,7 +111,7 @@
         <!-- Sample 3 -->
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/Well_Density_Mile.jpg" alt="map3" style="width: 90%">
+            <img src="images/infographic_thumb.png" alt="map3" style="width: 90%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal3').style.display='block'">Open</button>
             </div>
@@ -122,7 +123,7 @@
         <!-- Sample 4 -->
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/infographic_thumb.png" alt="map4" style="width: 82.5%">
+            <img src="images/Lab2_thumb.png" alt="map4" style="width: 100%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal4').style.display='block'">Open</button>
             </div>
@@ -131,7 +132,7 @@
         <!-- Sample 5 -->
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/Lab2_thumb.png" alt="map5" style="width: 100%">
+            <img src="images/Station 1.jpg" alt="map5" style="width: 85%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal5').style.display='block'">Open</button>
             </div>
@@ -140,7 +141,7 @@
         <!-- Sample 6 -->
         <div class="w3-third w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <img src="images/Avalanche.png" alt="map6" class="w3-border" style="width: 82.5%">
+            <img src="images/percentile90_hex_print.jpg" alt="map6" style="width: 85%">
             <div class="w3-container w3-center">
               <button class="w3-button w3-black w3-margin-bottom" onclick="document.getElementById('modal6').style.display='block'">Open</button>
             </div>
@@ -153,13 +154,29 @@
         <!-- Code Sample 1 -->
         <div class="w3-half w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <a href="images/SearchLogs_App.txt" target="_blank">Code Sample 1</a>
+            <a href="images/MapTool1.txt" target="_blank">ArcGIS Pro SDK for .NET Add-In</a>
+			<p>A map tool to open an attribute-linked PDF from selected features in the map.</p>
           </div>
         </div>
         <!-- Code Sample 2 -->
         <div class="w3-half w3-margin-bottom">
           <div id="whiteBox" class="w3-container w3-white w3-center">
-            <a href="images/Classify_IHS_Cells_Tool.txt" target="_blank">Code Sample 2</a>
+            <a href="images/OpenAsBuilts_addin.txt" target="_blank">ArcMap Python Add-In</a>
+			<p>The same map tool to open an attribute-linked PDF from selected features in the map.</p>
+          </div>
+        </div>
+		<!-- Code Sample 3 -->
+        <div class="w3-half w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <a href="images/SearchLogs_App.txt" target="_blank">Python Tkinter GUI App</a>
+			<p>Application to parse and update queried server logs for entries missed by the query.</p>
+          </div>
+        </div>
+		<!-- Code Sample 4 -->
+        <div class="w3-half w3-margin-bottom">
+          <div id="whiteBox" class="w3-container w3-white w3-center">
+            <a href="images/customPyModules.txt" target="_blank">Custom Python Classes</a>
+			<p>Example of two python classes and how they are used in a scheduled task on the server.</p>
           </div>
         </div>
       </div>
@@ -176,7 +193,7 @@
           <h2 class="w3-wide">Work Sample 1</h2>
         </header>
         <div class="w3-container">
-          <img src="images/AM6_portfolio.svg" alt="map1" style="width: 100%">
+          <img src="images/USGSmaps.png" alt="map1" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal1').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
@@ -192,7 +209,7 @@
           <h2 class="w3-wide">Work Sample 2</h2>
         </header>
         <div class="w3-container">
-          <img src="images/Well_Type_Mile.jpg" alt="map2" style="width: 100%">
+          <img src="images/Avalanche.png" alt="map2" class="w3-border" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal2').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
@@ -208,7 +225,7 @@
           <h2 class="w3-wide">Work Sample 3</h2>
         </header>
         <div class="w3-container">
-          <img src="images/Well_Density_Mile.jpg" alt="map3" style="width: 100%">
+          <img src="images/Harwell_GEOG572_Lab1_Infographic.png" alt="map3" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal3').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
@@ -224,7 +241,7 @@
           <h2 class="w3-wide">Work Sample 4</h2>
         </header>
         <div class="w3-container w3-padding-16">
-          <img src="images/Harwell_GEOG572_Lab1_Infographic.png" alt="map4" style="width: 100%">
+          <img src="images/Harwell_GEOG572_Lab2.png" alt="map4" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal4').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
@@ -240,7 +257,7 @@
           <h2 class="w3-wide">Work Sample 5</h2>
         </header>
         <div class="w3-container w3-padding-16">
-          <img src="images/Harwell_GEOG572_Lab2.png" alt="map5" style="width: 100%">
+          <img src="images/GJFD_DriveTimes.png" alt="map5" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal5').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
@@ -256,7 +273,7 @@
           <h2 class="w3-wide">Work Sample 6</h2>
         </header>
         <div class="w3-container w3-padding-16">
-          <img src="images/Avalanche.png" alt="map6" class="w3-border" style="width: 100%">
+          <img src="images/percentile90_hex_print.jpg" alt="map6" style="width: 100%">
           <button class="w3-button w3-red w3-section" onclick="document.getElementById('modal6').style.display='none'">Close <i class="fa fa-remove"></i></button>
         </div>
       </div>
