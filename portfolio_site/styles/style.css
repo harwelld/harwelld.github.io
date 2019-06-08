@@ -7,6 +7,10 @@ html, body, h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+#noStyle {
+	text-decoration: none;
+}
+
 #content {
   max-width: 3000px;
   margin-top: 46px;
