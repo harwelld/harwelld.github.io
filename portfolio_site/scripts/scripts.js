@@ -11,7 +11,7 @@ function carousel() {
     myIndex++;
     if (myIndex > x.length) {myIndex = 1}
     x[myIndex-1].style.display = "block";
-    setTimeout(carousel, 4000);
+    setTimeout(carousel, 5000);
 }
 
 // Used to toggle the menu on small screens when clicking on the menu button
@@ -24,13 +24,31 @@ function myFunction() {
     }
 }
 
+// Define modal variables
+var modal1 = document.getElementById("modal1");
+var modal2 = document.getElementById("modal2");
+var modal3 = document.getElementById("modal3");
+var modal7 = document.getElementById("modal7");
+var modal8 = document.getElementById("modal8");
+
 // When the user clicks anywhere outside of the modal, close it
-// var modal = document.getElementById('modal');
-// window.onclick = function(event) {
-//   if (event.target == modal) {
-//     modal.style.display = "none";
-//   }
-// }
+window.addEventListener("click", function(event) {
+	if (event.target == modal1) {
+		modal1.style.display = "none";
+	}
+	if (event.target == modal2) {
+		modal2.style.display = "none";
+	}
+	if (event.target == modal3) {
+		modal3.style.display = "none";
+	}
+	if (event.target == modal7) {
+		modal7.style.display = "none";
+	}
+	if (event.target == modal8) {
+		modal8.style.display = "none";
+	}
+})
 
 // MapBox API location map centered on Grand Junction
 mapboxgl.accessToken = 'pk.eyJ1IjoiaGFyd2VsbGQiLCJhIjoiY2pscHg1aGJtMjk4dzNwczY0dnpzenRkbiJ9.q_MbeY9ltMWtycZuo9FfUw';
